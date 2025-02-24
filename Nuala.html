@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nuala</title>
   <style>
-    /* Устанавливаем белый фон, чёрный минималистичный шрифт и центровку содержимого */
+    /* Основные стили для страницы */
     body {
       margin: 0;
       min-height: 100vh;
@@ -35,9 +35,30 @@
       line-height: 1.6;
       margin: 1em 0;
     }
-    iframe {
+    /* Стили для галереи */
+    .gallery {
+      display: flex;
+      align-items: center;
       margin-top: 1em;
+    }
+    .gallery button {
+      background: none;
       border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0 1em;
+    }
+    .gallery iframe {
+      width: 640px;
+      height: 480px;
+      border: none;
+      background-color: #fff; /* Белый фон для окна фотографий */
+    }
+    @media(max-width: 700px) {
+      .gallery iframe {
+        width: 100%;
+        height: auto;
+      }
     }
   </style>
 </head>
@@ -47,7 +68,47 @@
   <p>
     Nuala — флагманский проект Solo Group, возглавляемый Алданом Рспаевым и его молодой и креативной командой. Ресторан расположен в историческом здании Центрального почтамта Алматы, построенном в 1930-х годах в стиле конструктивизма. Это памятник архитектуры, важная часть культурного наследия города, известный своей элегантной архитектурой и характерным фасадом. В самом центре Алматы, в окружении зеленых скверов и парков, заведение создает атмосферу уединения и покоя, что делает его идеальным местом для отдыха.
   </p>
-  <iframe src="https://drive.google.com/file/d/11_4sPuHU8eN_hX9h8uJrbxMJ9hWTiCES/preview" width="640" height="480" allow="autoplay"></iframe>
+  <p style="margin-top: 1em;">
+    Здесь гостей ждет не только уединенная атмосфера, но и изысканная кухня и впечатляющая винная карта, создающие пространство для уникального гастрономического опыта.
+  </p>
+  
+  <div class="gallery">
+    <button id="prev">&#8592;</button>
+    <iframe id="galleryFrame" src="" allow="autoplay"></iframe>
+    <button id="next">&#8594;</button>
+  </div>
+  
+  <script>
+    // Массив ссылок на фотографии (iframe с превью)
+    const sources = [
+      "https://drive.google.com/file/d/1wJap07rrv7c-tQNIGT1W_bQUE3RnZgQI/preview",
+      "https://drive.google.com/file/d/1ugLYI1HZeV_BwdHS7FPewhOEnbEAxwNx/preview",
+      "https://drive.google.com/file/d/1szysuo8coNIQofvvK_W-b1a7I3cFSd9y/preview",
+      "https://drive.google.com/file/d/1eb0xSOFhPA-iNKITl5Fly_2G_x_0wiuK/preview",
+      "https://drive.google.com/file/d/169xnncNYid33GtJcYDNaDGFmfe678gMm/preview",
+      "https://drive.google.com/file/d/14YBqFHjNiCej5FuO_yy8X1pC2YCKY25Z/preview"
+    ];
+    
+    let currentIndex = 0;
+    const galleryFrame = document.getElementById("galleryFrame");
+    
+    function updateFrame() {
+      galleryFrame.src = sources[currentIndex];
+    }
+    
+    document.getElementById("prev").addEventListener("click", function() {
+      currentIndex = (currentIndex === 0) ? sources.length - 1 : currentIndex - 1;
+      updateFrame();
+    });
+    
+    document.getElementById("next").addEventListener("click", function() {
+      currentIndex = (currentIndex === sources.length - 1) ? 0 : currentIndex + 1;
+      updateFrame();
+    });
+    
+    // Инициализация галереи первым изображением
+    updateFrame();
+  </script>
 </body>
 </html>
 
